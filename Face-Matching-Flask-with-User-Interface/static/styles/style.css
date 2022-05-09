@@ -1,0 +1,35 @@
+body {
+    margin:0px;
+    height:100vh;
+    background: #1283da;
+  }
+
+  .center {
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  
+  }
+  .input{
+    width: 55%;
+    margin-left: auto;
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+  .preview{
+    width: 55%;
+    margin-left: auto;
+    
+  }
+  .final{
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    text-align: center;
+  }
+  .final img{
+    width: 25%;
+    height:239px;
+
+  }

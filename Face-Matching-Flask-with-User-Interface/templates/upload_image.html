@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+</head>
+<body>
+    <form action = "/upload" method = "POST" 
+         enctype = "multipart/form-data">
+         
+         <div class="input">
+            <input id="fileupload" name="fileupload" type="file" required multiple="true" multiple/>
+            <input type = "submit" value="Submit"/>
+            <input type = "reset"/>
+            
+        </div>
+        <div class="final" id="dvPreview">
+            {% for name in image_names %}
+            <img src="{{ url_for('static', filename=name) }}" >
+            {% endfor %}
+            <pre>{{content}}</pre>
+            <pre>{{"Face Match Score:",confidence}}</pre>
+        </div>
+         <br><br>
+
+      </form>   
+</body>
+<script language="javascript" type="text/javascript">
+    window.onload = function () {
+        var fileUpload = document.getElementById("fileupload");
+        fileUpload.onchange = function () {
+            if (typeof (FileReader) != "undefined") {
+                var dvPreview = document.getElementById("dvPreview");
+                dvPreview.innerHTML = "";
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                for (var i = 0; i < fileUpload.files.length; i++) {
+                    var file = fileUpload.files[i];
+                    if (regex.test(file.name.toLowerCase())) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var img = document.createElement("IMG");
+                            img.height = "100";
+                            img.width = "100";
+                            img.src = e.target.result;
+                            dvPreview.appendChild(img);
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert(file.name + " is not a valid image file.");
+                        dvPreview.innerHTML = "";
+                        return false;
+                    }
+                }
+            } else {
+                alert("This browser does not support HTML5 FileReader.");
+            }
+        }
+    };
+    </script>
+</html>
