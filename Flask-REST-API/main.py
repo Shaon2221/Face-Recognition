@@ -14,6 +14,15 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def get_Confidence(value):
+    OldValue=value
+    OldMin=0
+    OldMax=2.082
+    NewMax=0
+    NewMin=1
+    NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
+    print(NewValue)
+    return NewValue
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -65,14 +74,14 @@ def upload_file():
 				if result['verified'] == True:
 					print('Verified')
 					content='Verified'
-					confidence=result['distance']
+					confidence=get_Confidence(result['distance'])
 					resp = jsonify({'message' : 'Files successfully uploaded', 'result' : content, 'confidence' : confidence})
 					resp.status_code = 202
 					return resp
 				else:
 					print('Not Verified')
 					content='Not Verified'
-					confidence=result['distance']
+					confidence=get_Confidence(result['distance'])
 					resp = jsonify({'message' : 'Files successfully uploaded', 'result' : content, 'confidence' : confidence})
 					resp.status_code = 202
 					return resp
@@ -85,14 +94,14 @@ def upload_file():
 				if result['verified'] == True:
 					print('Verified')
 					content='Verified'
-					confidence=result['distance']
+					confidence=get_Confidence(result['distance'])
 					resp = jsonify({'message' : 'Files successfully uploaded', 'result' : content, 'confidence' : confidence})
 					resp.status_code = 202
 					return resp
 				else:
 					print('Not Verified')
 					content='Not Verified'
-					confidence=result['distance']
+					confidence=get_Confidence(result['distance'])
 					resp = jsonify({'message' : 'Files successfully uploaded', 'result' : content, 'confidence' : confidence})
 					resp.status_code = 202
 					return resp
